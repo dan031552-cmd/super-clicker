@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>סופר לחיצות</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>סופר לחיצות</h1>
+    <nav aria-label="ניווט ראשי">
+      <a href="#game">משחק</a>
+      <a href="#characters">דמויות</a>
+      <a href="#instructions">הוראות</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="game" class="game-section">
+      <h2>תפוס את הכוכב!</h2>
+      <p class="intro">הזז את השחקן עם החצים או עם W A S D, ונסה לתפוס את הכוכב בעזרת לחיצה.</p>
+
+      <div class="score-board">
+        <div>זמן: <span id="timer">0</span> שניות</div>
+        <div>ניקוד: <span id="score">0</span></div>
+      </div>
+
+      <div id="gameArea" class="game-area" aria-label="אזור המשחק">
+        <button id="target" class="target" type="button" aria-label="מטרה ללחיצה">⭐</button>
+        <div id="player" class="player" tabindex="0" aria-label="השחקן">🦊</div>
+      </div>
+
+      <div class="controls">
+        <button id="startButton" class="main-button" type="button">התחל משחק</button>
+        <button id="resetButton" class="secondary-button" type="button">איפוס</button>
+      </div>
+    </section>
+
+    <section id="characters" class="characters-section">
+      <h2>בחר דמות</h2>
+      <p>הבחירה שלך קבועה. הדמות לא מתחלפת באופן רנדומלי.</p>
+      <div class="character-choices">
+        <button class="character-button active" data-character="fox" type="button">
+          <img src="assets/fox.svg" alt="שועל">
+          <span>שועל</span>
+        </button>
+        <button class="character-button" data-character="cat" type="button">
+          <img src="assets/cat.svg" alt="חתול">
+          <span>חתול</span>
+        </button>
+        <button class="character-button" data-character="bear" type="button">
+          <img src="assets/bear.svg" alt="דוב">
+          <span>דוב</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="instructions" class="instructions-section">
+      <h2>איך משחקים?</h2>
+      <ol>
+        <li>לוחצים על "התחל משחק".</li>
+        <li>מזיזים את השחקן עם מקשי החצים או W A S D.</li>
+        <li>מתקרבים לכוכב ולוחצים עליו.</li>
+        <li>כל תפיסה מוצלחת מוסיפה נקודה והכוכב קופץ למקום חדש.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 כל הזכויות שמורות ליוצר המשחק בלבד.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

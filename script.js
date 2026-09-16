@@ -8,6 +8,7 @@ let realTimer = null;
 let gameStarted = false;
 let playerX = 14;
 let playerY = 14;
+let audioContext = null;
 
 const timer = document.getElementById("timer");
 const scoreText = document.getElementById("score");
@@ -48,12 +49,12 @@ function renderLeaderboard() {
   const scores = getScores().sort((a, b) => b.score - a.score).slice(0, 10);
   leaderboardList.innerHTML = "";
   if (!scores.length) {
-    leaderboardList.innerHTML = "<li>עדיין אין תוצאות. היו הראשונים!</li>";
+    leaderboardList.innerHTML = "<li class=\"empty-leaderboard\">טבלת השיאים נקייה. היו הראשונים!</li>";
     return;
   }
-  scores.forEach((result, index) => {
+  scores.forEach(function (result) {
     const item = document.createElement("li");
-    item.innerHTML = `<span>${index + 1}. ${result.name}</span><strong>${result.score} נקודות</strong>`;
+    item.innerHTML = `<span>🏆 ${result.name}</span><strong>${result.score} נקודות</strong>`;
     leaderboardList.appendChild(item);
   });
 }
@@ -64,6 +65,50 @@ function saveResult() {
   localStorage.setItem(STORAGE_SCORES, JSON.stringify(scores.slice(-50)));
   bestScoreText.textContent = getBestScore();
   renderLeaderboard();
+}
+
+function setupAudio() {
+  if (!audioContext) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) audioContext = new AudioContextClass();
+  }
+  if (audioContext && audioContext.state === "suspended") audioContext.resume();
+}
+
+function tone(frequency, duration, type = "sine", volume = 0.08, delay = 0) {
+  if (!audioContext) return;
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+  oscillator.type = type;
+  oscillator.frequency.value = frequency;
+  gain.gain.setValueAtTime(0.001, audioContext.currentTime + delay);
+  gain.gain.exponentialRampToValueAtTime(volume, audioContext.currentTime + delay + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + delay + duration);
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+  oscillator.start(audioContext.currentTime + delay);
+  oscillator.stop(audioContext.currentTime + delay + duration + 0.03);
+}
+
+function playStartSound() {
+  setupAudio();
+  tone(392, 0.13, "triangle", 0.07);
+  tone(523, 0.13, "triangle", 0.08, 0.12);
+  tone(659, 0.22, "triangle", 0.09, 0.24);
+}
+
+function playCollectSound() {
+  setupAudio();
+  tone(880, 0.08, "sine", 0.07);
+  tone(1175, 0.16, "sine", 0.08, 0.07);
+}
+
+function playEndSound() {
+  setupAudio();
+  tone(392, 0.22, "square", 0.08);
+  tone(392, 0.22, "square", 0.08, 0.26);
+  tone(523, 0.42, "square", 0.1, 0.52);
+  tone(659, 0.55, "triangle", 0.1, 0.95);
 }
 
 function reset() {
@@ -95,8 +140,9 @@ function finishGame() {
   startButton.textContent = "🚀 שחקו שוב";
   const previousBest = getBestScore();
   saveResult();
+  playEndSound();
   const newRecord = score > previousBest && score > 0;
-  message.textContent = newRecord ? `🏆 שיא חדש! סיימתם עם ${score} נקודות!` : `⏰ הזמן נגמר! סיימתם עם ${score} נקודות.`;
+  message.textContent = newRecord ? `🏆 שיא חדש! סיימתם עם ${score} נקודות!` : `📯 הזמן נגמר! סיימתם עם ${score} נקודות.`;
 }
 
 function startTimer() {
@@ -110,6 +156,8 @@ function startTimer() {
 
 function startGame() {
   reset();
+  setupAudio();
+  playStartSound();
   gameStarted = true;
   target.disabled = false;
   startButton.disabled = true;
@@ -147,12 +195,18 @@ function movePlayer(direction) {
   if (direction === "down") playerY += step;
   if (direction === "up") playerY -= step;
   placePlayer();
+  checkAutomaticCollection();
 }
 
 function handleKeyboard(event) {
-  const key = event.key.toLowerCase();
+  const key = String(event.key || "").toLowerCase();
+  const code = String(event.code || "");
   const keys = { arrowright: "right", d: "right", arrowleft: "left", a: "left", arrowdown: "down", s: "down", arrowup: "up", w: "up" };
-  const direction = keys[key];
+  let direction = keys[key];
+  if (!direction && code === "KeyD") direction = "right";
+  if (!direction && code === "KeyA") direction = "left";
+  if (!direction && code === "KeyS") direction = "down";
+  if (!direction && code === "KeyW") direction = "up";
   if (!direction) return;
   event.preventDefault();
   movePlayer(direction);
@@ -166,7 +220,7 @@ function playerIsCloseToTarget() {
   const targetCenterX = targetBox.left + targetBox.width / 2;
   const targetCenterY = targetBox.top + targetBox.height / 2;
   const distance = Math.hypot(playerCenterX - targetCenterX, playerCenterY - targetCenterY);
-  return distance < (playerBox.width + targetBox.width) * 0.85;
+  return distance < (playerBox.width + targetBox.width) * 0.95;
 }
 
 function collectTarget() {
@@ -178,6 +232,7 @@ function collectTarget() {
     score += 1;
     scoreText.textContent = score;
     message.textContent = `⭐ יש! תפסתם כוכב — ${score} נקודות!`;
+    playCollectSound();
     target.animate([{ transform: "scale(1)" }, { transform: "scale(1.5)" }, { transform: "scale(1)" }], { duration: 250 });
     moveTarget();
   } else {
@@ -186,10 +241,15 @@ function collectTarget() {
   }
 }
 
+function checkAutomaticCollection() {
+  if (playerIsCloseToTarget()) collectTarget();
+}
+
 function changeCharacter(event) {
+  event.preventDefault();
   const chosen = event.currentTarget.dataset.character;
   const faces = { fox: "🦊", cat: "🐱", bear: "🐻" };
-  player.textContent = faces[chosen];
+  player.textContent = faces[chosen] || faces.fox;
   characterButtons.forEach(button => button.classList.remove("active"));
   event.currentTarget.classList.add("active");
   message.textContent = `הדמות הוחלפה ל${event.currentTarget.querySelector("span").textContent}!`;
@@ -204,21 +264,15 @@ profileForm.addEventListener("submit", function (event) {
   bestScoreText.textContent = getBestScore();
 });
 
-playerNameInput.addEventListener("input", function () {
-  inputCount.textContent = `${playerNameInput.value.length}/16`;
-});
-
-clearLeaderboardButton.addEventListener("click", function () {
-  localStorage.removeItem(STORAGE_SCORES);
-  renderLeaderboard();
-  bestScoreText.textContent = 0;
-});
+playerNameInput.addEventListener("input", function () { inputCount.textContent = `${playerNameInput.value.length}/16`; });
+clearLeaderboardButton.addEventListener("click", function () { localStorage.removeItem(STORAGE_SCORES); renderLeaderboard(); bestScoreText.textContent = 0; });
 startButton.addEventListener("click", startGame);
 resetButton.addEventListener("click", reset);
 target.addEventListener("click", collectTarget);
-document.addEventListener("keydown", handleKeyboard);
-characterButtons.forEach(button => button.addEventListener("click", changeCharacter));
-moveButtons.forEach(button => button.addEventListener("click", () => movePlayer(button.dataset.direction)));
+target.addEventListener("touchend", function (event) { event.preventDefault(); collectTarget(); }, { passive: false });
+document.addEventListener("keydown", handleKeyboard, { passive: false });
+characterButtons.forEach(button => { button.addEventListener("click", changeCharacter); button.addEventListener("touchend", changeCharacter, { passive: false }); });
+moveButtons.forEach(button => { button.addEventListener("click", () => movePlayer(button.dataset.direction)); button.addEventListener("touchstart", event => { event.preventDefault(); movePlayer(button.dataset.direction); }, { passive: false }); });
 window.addEventListener("resize", placePlayer);
 
 playerNameInput.value = localStorage.getItem(STORAGE_PROFILE) || "";

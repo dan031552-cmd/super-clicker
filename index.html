@@ -12,82 +12,32 @@
   <div class="background-shape shape-two"></div>
 
   <header class="site-header">
-    <div class="brand-row">
-      <div class="logo-badge">⚡</div>
-      <div>
-        <p class="eyebrow">ARCADE ZONE</p>
-        <h1>סופר <span>קליקר</span></h1>
-      </div>
-    </div>
-    <nav aria-label="ניווט ראשי">
-      <a href="#game">🎮 משחק</a>
-      <a href="#characters">🦸 דמויות</a>
-      <a href="#instructions">💡 הוראות</a>
-    </nav>
+    <div class="brand-row"><div class="logo-badge">⚡</div><div><p class="eyebrow">ARCADE ZONE</p><h1>סופר <span>קליקר</span></h1></div></div>
+    <nav aria-label="ניווט ראשי"><a href="#game">🎮 משחק</a><a href="#profile">👤 פרופיל</a><a href="#characters">🦸 דמויות</a><a href="#leaderboard">🏆 דירוג</a></nav>
   </header>
 
   <main>
+    <section id="profile" class="profile-section panel">
+      <div><p class="eyebrow pink-text">PLAYER PROFILE</p><h2>מי משחק היום?</h2><p>השם נשמר רק בדפדפן שלך. אין כאן חשבון אמיתי ואין צורך בסיסמה.</p></div>
+      <form id="profileForm" class="profile-form"><label for="playerName">שם השחקן</label><input id="playerName" type="text" maxlength="16" placeholder="לדוגמה: דני" autocomplete="nickname" required><button class="main-button" type="submit">💾 שמור פרופיל</button></form>
+      <p id="profileMessage" class="message" role="status"></p>
+    </section>
+
     <section id="game" class="game-section panel">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow pink-text">MISSION 01</p>
-          <h2>תפוס את הכוכב!</h2>
-        </div>
-        <div class="live-pill"><span></span> LIVE</div>
-      </div>
-      <p class="intro">זוזו עם החצים או עם <strong>W A S D</strong>, התקרבו לכוכב ולחצו עליו בדיוק בזמן!</p>
-
-      <div class="score-board">
-        <div class="stat-card"><span class="stat-icon">⏱️</span><span>זמן</span><strong id="timer">0</strong><small>שניות</small></div>
-        <div class="stat-card score-stat"><span class="stat-icon">🏆</span><span>ניקוד</span><strong id="score">0</strong><small>כוכבים</small></div>
-      </div>
-
-      <div id="gameArea" class="game-area" aria-label="אזור המשחק" tabindex="0">
-        <div class="game-grid"></div>
-        <div class="game-hint">השתמשו בחצים כדי לזוז</div>
-        <button id="target" class="target" type="button" aria-label="מטרה ללחיצה">⭐</button>
-        <div id="player" class="player" tabindex="0" aria-label="השחקן">🦊</div>
-      </div>
-
-      <div class="mobile-controls" aria-label="בקרי תנועה למסך מגע">
-        <button class="move-button up" data-direction="up" type="button" aria-label="למעלה">▲</button>
-        <div class="horizontal-controls">
-          <button class="move-button" data-direction="left" type="button" aria-label="שמאלה">◀</button>
-          <button class="move-button" data-direction="down" type="button" aria-label="למטה">▼</button>
-          <button class="move-button" data-direction="right" type="button" aria-label="ימינה">▶</button>
-        </div>
-      </div>
-
-      <div class="controls">
-        <button id="startButton" class="main-button" type="button">🚀 התחל משחק</button>
-        <button id="resetButton" class="secondary-button" type="button">↻ איפוס</button>
-      </div>
-      <p id="message" class="message" role="status">לחצו על "התחל משחק" כדי להתחיל!</p>
+      <div class="section-heading"><div><p class="eyebrow pink-text">MISSION 01</p><h2>תפוס את הכוכב!</h2></div><div class="live-pill"><span></span> LIVE</div></div>
+      <p class="intro">יש לכם <strong>60 שניות</strong>. זוזו עם החצים או עם <strong>W A S D</strong>, התקרבו לכוכב ולחצו עליו!</p>
+      <div class="score-board"><div class="stat-card"><span class="stat-icon">⏱️</span><span>נותר</span><strong id="timer">60</strong><small>שניות</small></div><div class="stat-card score-stat"><span class="stat-icon">🏆</span><span>ניקוד</span><strong id="score">0</strong><small>כוכבים</small></div><div class="stat-card best-stat"><span class="stat-icon">👑</span><span>שיא</span><strong id="bestScore">0</strong><small>נקודות</small></div></div>
+      <div id="gameArea" class="game-area" aria-label="אזור המשחק" tabindex="0"><div class="game-grid"></div><div class="game-hint">חצים / W A S D</div><button id="target" class="target" type="button" aria-label="מטרה ללחיצה">⭐</button><div id="player" class="player" tabindex="0" aria-label="השחקן">🦊</div></div>
+      <div class="mobile-controls" aria-label="בקרי תנועה למסך מגע"><button class="move-button up" data-direction="up" type="button" aria-label="למעלה">▲</button><div class="horizontal-controls"><button class="move-button" data-direction="left" type="button" aria-label="שמאלה">◀</button><button class="move-button" data-direction="down" type="button" aria-label="למטה">▼</button><button class="move-button" data-direction="right" type="button" aria-label="ימינה">▶</button></div></div>
+      <div class="controls"><button id="startButton" class="main-button" type="button">🚀 התחל משחק</button><button id="resetButton" class="secondary-button" type="button">↻ איפוס</button></div><p id="message" class="message" role="status">שמרו שם ואז לחצו על "התחל משחק"!</p>
     </section>
 
-    <section id="characters" class="characters-section panel">
-      <p class="eyebrow pink-text">CHOOSE YOUR HERO</p>
-      <h2>בחרו את הגיבור שלכם</h2>
-      <p>הבחירה נשמרת עד שתבחרו דמות אחרת.</p>
-      <div class="character-choices">
-        <button class="character-button active" data-character="fox" type="button"><img src="assets/fox.svg" alt="שועל"><span>🦊 שועל</span></button>
-        <button class="character-button" data-character="cat" type="button"><img src="assets/cat.svg" alt="חתול"><span>🐱 חתול</span></button>
-        <button class="character-button" data-character="bear" type="button"><img src="assets/bear.svg" alt="דוב"><span>🐻 דוב</span></button>
-      </div>
-    </section>
+    <section id="characters" class="characters-section panel"><p class="eyebrow pink-text">CHOOSE YOUR HERO</p><h2>בחרו את הגיבור שלכם</h2><p>לחיצה על כרטיס מחליפה את הדמות מיד.</p><div class="character-choices"><button class="character-button active" data-character="fox" type="button"><img src="assets/fox.svg" alt="שועל"><span>🦊 שועל</span></button><button class="character-button" data-character="cat" type="button"><img src="assets/cat.svg" alt="חתול"><span>🐱 חתול</span></button><button class="character-button" data-character="bear" type="button"><img src="assets/bear.svg" alt="דוב"><span>🐻 דוב</span></button></div></section>
 
-    <section id="instructions" class="instructions-section panel">
-      <p class="eyebrow pink-text">HOW TO PLAY</p>
-      <h2>איך משחקים?</h2>
-      <div class="instruction-grid">
-        <div><b>01</b><span>לחצו על התחל משחק</span></div>
-        <div><b>02</b><span>זוזו עם החצים או W A S D</span></div>
-        <div><b>03</b><span>התקרבו לכוכב ולחצו עליו</span></div>
-        <div><b>04</b><span>צברו כמה שיותר נקודות</span></div>
-      </div>
-    </section>
+    <section id="leaderboard" class="leaderboard-section panel"><p class="eyebrow pink-text">LOCAL LEADERBOARD</p><h2>טבלת השיאים</h2><p>הטבלה נשמרת מקומית במכשיר הזה בלבד.</p><ol id="leaderboardList" class="leaderboard-list"><li>עדיין אין תוצאות. היו הראשונים!</li></ol><button id="clearLeaderboard" class="secondary-button" type="button">🗑️ נקה טבלה</button></section>
+
+    <section id="instructions" class="instructions-section panel"><p class="eyebrow pink-text">HOW TO PLAY</p><h2>איך משחקים?</h2><div class="instruction-grid"><div><b>01</b><span>שמרו שם לפרופיל</span></div><div><b>02</b><span>לחצו על התחל משחק</span></div><div><b>03</b><span>זוזו עם החצים או W A S D</span></div><div><b>04</b><span>תפסו כמה שיותר כוכבים בדקה</span></div></div></section>
   </main>
-
   <footer class="site-footer"><p>© 2026 כל הזכויות שמורות ליוצר המשחק בלבד.</p></footer>
   <script src="script.js"></script>
 </body>

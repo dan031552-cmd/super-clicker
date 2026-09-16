@@ -19,3 +19,18 @@ main { width: min(100% - 30px, 920px); margin: 12px auto 40px; }.panel { margin-
 .instruction-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }.instruction-grid div { padding: 15px 10px; border-radius: 16px; background: #ffffff09; }.instruction-grid b { display: block; color: var(--pink); font-size: 1.2rem; }.instruction-grid span { color: var(--muted); font-size: .85rem; }.site-footer { padding: 25px; color: var(--muted); text-align: center; background: #080a19; }
 @media (max-width: 650px) { .site-header { flex-direction: column; text-align: center; }.game-area { height: 340px; }.mobile-controls { display: flex; }.player, .target { width: 56px; height: 56px; }.instruction-grid { grid-template-columns: repeat(2, 1fr); }.score-board { gap: 8px; }.stat-card { min-width: 125px; padding: 8px 10px; } }
 @media (max-width: 390px) { nav a { font-size: .85rem; padding: 7px 10px; }.character-button { min-width: 110px; }.character-button img { width: 60px; height: 60px; } }
+
+.profile-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+.profile-form { display: grid; gap: 8px; }
+.profile-form label { color: var(--muted); font-size: .85rem; }
+.profile-form input { width: 100%; padding: 13px 15px; border: 1px solid #ffffff2b; border-radius: 13px; outline: none; color: var(--text); font: inherit; background: #0d1028; }
+.profile-form input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px #31e6e122; }
+.profile-form .main-button { margin-top: 4px; }
+.leaderboard-list { display: grid; gap: 8px; padding: 0; margin: 20px 0; list-style: none; }
+.leaderboard-list li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 15px; border: 1px solid #ffffff14; border-radius: 12px; color: var(--muted); background: #ffffff09; }
+.leaderboard-list li:first-child { border-color: #ffd84d88; color: var(--yellow); }
+.leaderboard-list strong { color: var(--text); }
+.leaderboard-section .secondary-button { padding: 9px 14px; font-size: .85rem; }
+.main-button:disabled { cursor: wait; opacity: .65; transform: none; }
+.target:disabled { cursor: default; opacity: .55; }
+@media (max-width: 650px) { .profile-section { grid-template-columns: 1fr; } .score-board { flex-wrap: wrap; } .stat-card { flex: 1; } }

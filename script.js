@@ -23,6 +23,7 @@ const moveButtons = document.querySelectorAll(".move-button");
 const profileForm = document.getElementById("profileForm");
 const playerNameInput = document.getElementById("playerName");
 const profileMessage = document.getElementById("profileMessage");
+const inputCount = document.getElementById("inputCount");
 const leaderboardList = document.getElementById("leaderboardList");
 const clearLeaderboardButton = document.getElementById("clearLeaderboard");
 
@@ -203,6 +204,10 @@ profileForm.addEventListener("submit", function (event) {
   bestScoreText.textContent = getBestScore();
 });
 
+playerNameInput.addEventListener("input", function () {
+  inputCount.textContent = `${playerNameInput.value.length}/16`;
+});
+
 clearLeaderboardButton.addEventListener("click", function () {
   localStorage.removeItem(STORAGE_SCORES);
   renderLeaderboard();
@@ -217,6 +222,7 @@ moveButtons.forEach(button => button.addEventListener("click", () => movePlayer(
 window.addEventListener("resize", placePlayer);
 
 playerNameInput.value = localStorage.getItem(STORAGE_PROFILE) || "";
+inputCount.textContent = `${playerNameInput.value.length}/16`;
 bestScoreText.textContent = getBestScore();
 renderLeaderboard();
 reset();

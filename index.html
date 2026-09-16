@@ -1,70 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="אשכנזי — חולצות לבנות עם אופי של מגרש." />
-  <title>אשכנזי | חולצות עם סיפור</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Rubik+Mono+One&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14152e">
+  <title>סופר קליקר — משחק תפיסת הכוכבים</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="confetti-layer" aria-hidden="true"></div>
+  <div class="background-shape shape-one"></div>
+  <div class="background-shape shape-two"></div>
+
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="אשכנזי — דף הבית"><span class="brand-ball">●</span><span>אשכנזי</span></a>
-    <nav class="main-nav" aria-label="ניווט ראשי">
-      <a href="#shop">החולצות</a>
-      <a href="#gallery">גלריה</a>
-      <a href="#reviews">ביקורות</a>
+    <div class="brand-row">
+      <div class="logo-badge">⚡</div>
+      <div>
+        <p class="eyebrow">ARCADE ZONE</p>
+        <h1>סופר <span>קליקר</span></h1>
+      </div>
+    </div>
+    <nav aria-label="ניווט ראשי">
+      <a href="#game">🎮 משחק</a>
+      <a href="#characters">🦸 דמויות</a>
+      <a href="#instructions">💡 הוראות</a>
     </nav>
-    <button class="cart-button" id="open-cart" type="button" aria-label="פתיחת סל ההזמנה"><span>סל</span><b id="cart-count">0</b></button>
   </header>
 
-  <main id="top">
-    <section class="hero section-shell">
-      <div class="hero-copy">
-        <p class="eyebrow">DROP 01 · WHITE BALL ENERGY</p>
-        <h1>אשכנזי הכדור<br><em>הוא לא סתם חולצה.</em></h1>
-        <p class="hero-text">עיצוב נקי, נוכחות חזקה, וחולצה אחת שלא מתבלבלת עם אף אחת אחרת.</p>
-        <div class="hero-actions"><a class="button button-dark" href="#shop">לצפייה בקולקציה <span>←</span></a></div>
-        <div class="hero-note"><span class="tiny-ball">●</span><span>הקולקציה הראשונה של אשכנזי — כולה בלבן.</span></div>
+  <main>
+    <section id="game" class="game-section panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow pink-text">MISSION 01</p>
+          <h2>תפוס את הכוכב!</h2>
+        </div>
+        <div class="live-pill"><span></span> LIVE</div>
       </div>
-      <div class="hero-art" aria-label="איור כדור לבן על מגרש">
-        <div class="sun-ring"></div><div class="court-line line-one"></div><div class="court-line line-two"></div>
-        <div class="hero-ball"><span>אשכנזי</span></div>
-        <div class="hero-stamp">EST.<br>2026</div>
+      <p class="intro">זוזו עם החצים או עם <strong>W A S D</strong>, התקרבו לכוכב ולחצו עליו בדיוק בזמן!</p>
+
+      <div class="score-board">
+        <div class="stat-card"><span class="stat-icon">⏱️</span><span>זמן</span><strong id="timer">0</strong><small>שניות</small></div>
+        <div class="stat-card score-stat"><span class="stat-icon">🏆</span><span>ניקוד</span><strong id="score">0</strong><small>כוכבים</small></div>
+      </div>
+
+      <div id="gameArea" class="game-area" aria-label="אזור המשחק" tabindex="0">
+        <div class="game-grid"></div>
+        <div class="game-hint">השתמשו בחצים כדי לזוז</div>
+        <button id="target" class="target" type="button" aria-label="מטרה ללחיצה">⭐</button>
+        <div id="player" class="player" tabindex="0" aria-label="השחקן">🦊</div>
+      </div>
+
+      <div class="mobile-controls" aria-label="בקרי תנועה למסך מגע">
+        <button class="move-button up" data-direction="up" type="button" aria-label="למעלה">▲</button>
+        <div class="horizontal-controls">
+          <button class="move-button" data-direction="left" type="button" aria-label="שמאלה">◀</button>
+          <button class="move-button" data-direction="down" type="button" aria-label="למטה">▼</button>
+          <button class="move-button" data-direction="right" type="button" aria-label="ימינה">▶</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="startButton" class="main-button" type="button">🚀 התחל משחק</button>
+        <button id="resetButton" class="secondary-button" type="button">↻ איפוס</button>
+      </div>
+      <p id="message" class="message" role="status">לחצו על "התחל משחק" כדי להתחיל!</p>
+    </section>
+
+    <section id="characters" class="characters-section panel">
+      <p class="eyebrow pink-text">CHOOSE YOUR HERO</p>
+      <h2>בחרו את הגיבור שלכם</h2>
+      <p>הבחירה נשמרת עד שתבחרו דמות אחרת.</p>
+      <div class="character-choices">
+        <button class="character-button active" data-character="fox" type="button"><img src="assets/fox.svg" alt="שועל"><span>🦊 שועל</span></button>
+        <button class="character-button" data-character="cat" type="button"><img src="assets/cat.svg" alt="חתול"><span>🐱 חתול</span></button>
+        <button class="character-button" data-character="bear" type="button"><img src="assets/bear.svg" alt="דוב"><span>🐻 דוב</span></button>
       </div>
     </section>
 
-    <section class="promo-strip"><div><span class="promo-dot">✦</span><strong>מבצע 3 חולצות ומעלה — 60 ש״ח לחולצה</strong></div><span>משלוח עד הבית +5 ש״ח</span><div class="promo-marquee">WHITE IS A STATEMENT · WHITE IS A STATEMENT · WHITE IS A STATEMENT ·</div></section>
-
-    <section class="section-shell shop-section" id="shop">
-      <div class="section-heading"><div><p class="eyebrow">THE FIRST DROP</p><h2>בחרו את החולצה שלכם</h2></div><p class="heading-aside">כל חולצה מתחילה ב־<strong>70 ש״ח</strong><br>והופכת לסיפור שלכם.</p></div>
-      <div class="product-grid" id="product-grid"></div>
-    </section>
-
-    <section class="experience-grid section-shell" id="gallery">
-      <div class="coming-card"><p class="eyebrow">NEXT DROP</p><h2>חולצה נוספת<br><em>בקרוב.</em></h2><p>אנחנו בונים את הדגם הבא. הוא יגיע לכאן כשיהיה מוכן.</p><span class="story-signature">ASHKENAZI / 02</span></div>
-      <div class="gallery-card"><div class="gallery-top"><p class="eyebrow">GALLERY</p><span>התמונות שלך יופיעו כאן</span></div><div class="gallery-placeholders"><div class="gallery-slot"><span>＋</span><small>תמונה לא נמצאת כעת</small></div><div class="gallery-slot"><span>＋</span><small>תמונה לא נמצאת כעת</small></div><div class="gallery-slot"><span>＋</span><small>תמונה לא נמצאת כעת</small></div></div><p class="gallery-foot">התמונות יתווספו בקרוב.</p></div>
-    </section>
-
-    <section class="reviews-section section-shell" id="reviews">
-      <div class="section-heading reviews-heading"><div><p class="eyebrow">FROM THE PEOPLE</p><h2>מה אומרים על אשכנזי</h2></div><button class="plus-button" id="open-review" type="button" title="הוספת ביקורת" aria-label="הוספת ביקורת">+</button></div>
-      <div class="review-status" id="review-status"></div><div class="reviews-grid" id="reviews-grid"></div>
+    <section id="instructions" class="instructions-section panel">
+      <p class="eyebrow pink-text">HOW TO PLAY</p>
+      <h2>איך משחקים?</h2>
+      <div class="instruction-grid">
+        <div><b>01</b><span>לחצו על התחל משחק</span></div>
+        <div><b>02</b><span>זוזו עם החצים או W A S D</span></div>
+        <div><b>03</b><span>התקרבו לכוכב ולחצו עליו</span></div>
+        <div><b>04</b><span>צברו כמה שיותר נקודות</span></div>
+      </div>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="brand footer-brand"><span class="brand-ball">●</span><span>אשכנזי</span></div><p>נולד במגרש. נלבש בכל מקום.</p><span>© 2026 Ashkenazi</span></footer>
-
-  <aside class="cart-drawer" id="cart-drawer" aria-hidden="true"><div class="drawer-backdrop" data-close-cart></div><div class="drawer-panel"><div class="drawer-header"><div><p class="eyebrow">YOUR ORDER</p><h2>הסל שלך</h2></div><button class="icon-button" data-close-cart type="button" aria-label="סגירת סל">×</button></div><div id="cart-items" class="cart-items"></div><div class="coupon-box"><label for="coupon">יש לך קוד סודי?</label><div class="coupon-row"><input id="coupon" maxlength="4" inputmode="numeric" placeholder="קוד קופון"><button id="apply-coupon" type="button">הפעל</button></div><small id="coupon-message"></small></div><div class="order-summary" id="order-summary"></div><div class="customer-details"><label for="customer-name">שם מלא</label><input id="customer-name" type="text" autocomplete="name" placeholder="השם שלך להזמנה"><small id="customer-message"></small></div><button class="button whatsapp-button" id="checkout-button" type="button">שליחת הזמנה בוואטסאפ <span>↗</span></button><p class="drawer-note">ההזמנה תיפתח כהודעה מוכנה בוואטסאפ. לאחר מכן נתאם איתך את הפרטים.</p></div></aside>
-
-  <div class="modal" id="product-modal" aria-hidden="true"><div class="modal-backdrop" data-close-modal></div><div class="modal-card"><button class="icon-button modal-close" data-close-modal type="button" aria-label="סגירה">×</button><div id="product-modal-content"></div></div></div>
-  <div class="modal" id="success-modal" aria-hidden="true"><div class="modal-backdrop"></div><div class="modal-card success-card"><div class="success-mark">✓</div><p class="eyebrow">ORDER SENT</p><h2>תודה שקנית,<br><em>נשמח לראותך שוב.</em></h2><p>ההזמנה שלך מוכנה בוואטסאפ. שמרנו לך גם את האפשרות להוסיף ביקורת אחרי הקנייה.</p><div class="success-actions"><button class="button button-dark" id="success-home" type="button">חזרה לדף הבית</button><button class="button button-light" id="success-review" type="button">הוספת ביקורת +</button></div></div></div>
-  <div class="modal" id="review-modal" aria-hidden="true"><div class="modal-backdrop" data-close-review></div><div class="modal-card review-card"><button class="icon-button modal-close" data-close-review type="button" aria-label="סגירה">×</button><p class="eyebrow">YOUR VOICE</p><h2>ספרו לנו איך היה</h2><p class="muted" id="review-lock-message"></p><form id="review-form"><label>השם שלך<input name="name" required maxlength="30" placeholder="איך לקרוא לך?"></label><label>הביקורת<textarea name="text" required maxlength="240" rows="4" placeholder="מה אהבת בחולצה?"></textarea></label><label>דירוג<select name="rating"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select></label><button class="button button-dark" type="submit">פרסום ביקורת</button></form></div></div>
-  <div class="modal" id="review-modal" aria-hidden="true"><div class="modal-backdrop" data-close-review></div><div class="modal-card review-card"><button class="icon-button modal-close" data-close-review type="button" aria-label="סגירה">×</button><p class="eyebrow">YOUR VOICE</p><h2>ספרו לנו איך היה</h2><p class="muted" id="review-lock-message"></p><form id="review-form"><label>השם שלך<input name="name" required maxlength="30" placeholder="איך לקרוא לך?"></label><label>הביקורת<textarea name="text" required maxlength="240" rows="4" placeholder="מה אהבת בחולצה?"></textarea></label><label>דירוג<select name="rating"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select></label><button class="button button-dark" type="submit">פרסום ביקורת</button></form></div></div>
-  <div class="toast" id="review-toast" role="status" aria-live="polite">✓ ביקורת נוספה בהצלחה</div>
+  <footer class="site-footer"><p>© 2026 כל הזכויות שמורות ליוצר המשחק בלבד.</p></footer>
   <script src="script.js"></script>
 </body>
 </html>
